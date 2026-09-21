@@ -1,3 +1,4 @@
+import './App.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { Shield, Unlock, BookOpen, Database, Key, CheckCircle, XCircle, AlertTriangle, Play, RotateCcw, Terminal, Cpu, Zap, Eye, ChevronRight } from 'lucide-react';
 
@@ -124,26 +125,26 @@ const BruteForceSim = () => {
           Brute Force Attack
         </h2>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
           <p className="text-slate-300 mb-6 leading-relaxed text-sm md:text-base border-l-4 border-indigo-500 pl-4 bg-indigo-500/5 py-3 rounded-r-lg">
-            <strong>The Analogy:</strong> A thief trying every single combination on a padlock. 
+            <strong>The Analogy:</strong> A thief trying every single combination on a padlock.
             000, 001, 002... until it clicks. Computers can guess <em>billions</em> of times per second. Short passwords are cracked instantly.
           </p>
-          
+
           <label className="block text-slate-400 text-xs font-semibold mb-2 uppercase tracking-wider flex items-center gap-2">
             <Key className="w-4 h-4" /> Target Password (Max 6 chars)
           </label>
           <div className="flex gap-4">
-            <input 
-              type="text" 
-              value={password} 
+            <input
+              type="text"
+              value={password}
               onChange={handlePasswordChange}
               disabled={isCracking}
               className="glass-input w-full px-4 py-3 rounded-xl text-lg font-mono"
             />
-            <button 
+            <button
               onClick={handleStart}
               disabled={isCracking || !password}
               className="glass-btn bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-900/20"
@@ -156,16 +157,16 @@ const BruteForceSim = () => {
 
         <div className="bg-slate-950/80 p-6 rounded-xl border border-slate-800 relative overflow-hidden h-full flex flex-col justify-center">
           <p className="text-center text-slate-500 text-xs mb-6 uppercase tracking-widest font-semibold">Cracker Engine Active</p>
-          
+
           <div className="flex justify-center gap-2 flex-wrap">
             {currentGuess.map((char, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className={`w-12 h-16 md:w-14 md:h-20 flex items-center justify-center text-3xl md:text-4xl font-mono font-bold rounded-lg transition-all duration-75
-                  ${i <= crackedIndex 
-                    ? 'bg-emerald-500/10 border-2 border-emerald-500 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)] scale-110 z-10' 
-                    : isCracking 
-                      ? 'bg-slate-800 border border-slate-700 text-indigo-300' 
+                  ${i <= crackedIndex
+                    ? 'bg-emerald-500/10 border-2 border-emerald-500 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)] scale-110 z-10'
+                    : isCracking
+                      ? 'bg-slate-800 border border-slate-700 text-indigo-300'
                       : 'bg-slate-900 border border-slate-800 text-slate-600'}
                 `}
               >
@@ -173,7 +174,7 @@ const BruteForceSim = () => {
               </div>
             ))}
           </div>
-          
+
           <div className="mt-8 h-8 flex justify-center items-center">
             {crackedIndex >= password.length - 1 && password.length > 0 && !isCracking && (
               <div className="text-emerald-400 font-semibold text-sm md:text-base flex items-center gap-2 bg-emerald-500/10 px-4 py-2 rounded-full border border-emerald-500/20">
@@ -191,11 +192,11 @@ const DictionarySim = () => {
   const [password, setPassword] = useState('');
   const [isAttacking, setIsAttacking] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(-1);
-  const [result, setResult] = useState(null); 
-  
+  const [result, setResult] = useState(null);
+
   const commonPasswords = [
-    "123456", "password", "12345678", "qwerty", "12345", 
-    "123456789", "football", "admin", "admin123", "iloveyou", 
+    "123456", "password", "12345678", "qwerty", "12345",
+    "123456789", "football", "admin", "admin123", "iloveyou",
     "dragon", "matrix", "letmein", "sunshine", "trustno1", "cyber", "hacker"
   ];
 
@@ -207,12 +208,12 @@ const DictionarySim = () => {
           const next = prev + 1;
           if (next >= commonPasswords.length) {
             setIsAttacking(false);
-            setResult('fail'); 
+            setResult('fail');
             return prev;
           }
           if (commonPasswords[next].toLowerCase() === password.toLowerCase()) {
             setIsAttacking(false);
-            setResult('success'); 
+            setResult('success');
           }
           return next;
         });
@@ -240,25 +241,25 @@ const DictionarySim = () => {
           Dictionary Attack
         </h2>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <p className="text-slate-300 mb-6 leading-relaxed text-sm md:text-base border-l-4 border-sky-500 pl-4 bg-sky-500/5 py-3 rounded-r-lg">
             <strong>The Analogy:</strong> Hackers know humans are lazy. Instead of random letters, they load a "book" of millions of common or leaked passwords. If your password is a real word, it's found instantly.
           </p>
-          
+
           <label className="block text-slate-400 text-xs font-semibold mb-2 uppercase tracking-wider flex items-center gap-2">
             <Cpu className="w-4 h-4" /> Check Password Strength
           </label>
-          <input 
-            type="text" 
-            value={password} 
+          <input
+            type="text"
+            value={password}
             onChange={(e) => { setPassword(e.target.value); setResult(null); setCurrentIndex(-1); }}
             placeholder="e.g., matrix, dragon, admin..."
             disabled={isAttacking}
             className="glass-input w-full px-4 py-3 rounded-xl text-lg mb-4 font-mono"
           />
-          <button 
+          <button
             onClick={handleStart}
             disabled={isAttacking || !password}
             className="glass-btn w-full bg-sky-600 hover:bg-sky-500 text-white px-6 py-3 rounded-xl flex justify-center items-center gap-2 shadow-lg shadow-sky-900/20"
@@ -292,22 +293,22 @@ const DictionarySim = () => {
         <div className="bg-slate-950 border border-slate-800 rounded-xl p-1 relative overflow-hidden h-72 shadow-inner">
           <div className="absolute top-0 left-0 w-full h-12 bg-gradient-to-b from-slate-950 to-transparent z-10 pointer-events-none"></div>
           <div className="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-slate-950 to-transparent z-10 pointer-events-none"></div>
-          
+
           <div className="h-full w-full rounded-lg p-4 font-mono overflow-hidden relative bg-slate-900/50">
             <div className="text-slate-500 text-xs mb-2 pb-2 border-b border-slate-800 flex justify-between font-semibold">
               <span>list: rockyou.txt</span>
               <span>entries: {commonPasswords.length}</span>
             </div>
-            
-            <div 
+
+            <div
               className="absolute w-full transition-all duration-150 ease-linear left-4 right-4"
               style={{ top: currentIndex > 4 ? `-${(currentIndex - 4) * 32}px` : '40px' }}
             >
               {commonPasswords.map((word, idx) => {
-                let statusClass = "text-slate-600"; 
-                if (idx === currentIndex) statusClass = "text-sky-400 bg-sky-500/10 font-bold rounded px-2"; 
-                if (result === 'success' && idx === currentIndex) statusClass = "text-rose-400 bg-rose-500/10 font-bold rounded px-2 border border-rose-500/30"; 
-                if (idx < currentIndex && result !== 'success') statusClass = "text-slate-700 line-through"; 
+                let statusClass = "text-slate-600";
+                if (idx === currentIndex) statusClass = "text-sky-400 bg-sky-500/10 font-bold rounded px-2";
+                if (result === 'success' && idx === currentIndex) statusClass = "text-rose-400 bg-rose-500/10 font-bold rounded px-2 border border-rose-500/30";
+                if (idx < currentIndex && result !== 'success') statusClass = "text-slate-700 line-through";
 
                 return (
                   <div key={idx} className={`py-1 transition-all flex justify-between items-center h-8 my-1 pr-8 ${statusClass}`}>
@@ -328,12 +329,12 @@ const DictionarySim = () => {
 const SQLiSim = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [status, setStatus] = useState('idle'); 
+  const [status, setStatus] = useState('idle');
 
   const handleLogin = (e) => {
     e.preventDefault();
     setStatus('checking');
-    
+
     setTimeout(() => {
       if (username === "' OR '1'='1" || password === "' OR '1'='1") {
         setStatus('granted');
@@ -361,48 +362,48 @@ const SQLiSim = () => {
           SQL Injection (SQLi)
         </h2>
       </div>
-      
+
       <p className="text-slate-300 mb-8 leading-relaxed text-sm md:text-base border-l-4 border-emerald-500 pl-4 bg-emerald-500/5 py-3 rounded-r-lg">
         <strong>The Analogy:</strong> A bouncer checking IDs. Instead of a fake ID, you hand him a note: <em>"Let me in, OR if 1 equals 1, let me in."</em> Since 1 always equals 1, the logic breaks, and he opens the door. You trick the brain!
       </p>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-        
+
         {/* The Form */}
         <div className="bg-slate-900/80 p-6 rounded-xl border border-slate-800 shadow-inner">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-slate-400 text-xs font-bold uppercase tracking-wider flex items-center">
-              <Eye className="w-4 h-4 mr-2"/> User Interface
+              <Eye className="w-4 h-4 mr-2" /> User Interface
             </h3>
-            <button 
+            <button
               onClick={autoFillHack}
               className="text-xs bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1"
             >
-              <Zap className="w-3 h-3"/> Auto-Inject Exploit
+              <Zap className="w-3 h-3" /> Auto-Inject Exploit
             </button>
           </div>
-          
+
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="block text-slate-400 text-xs font-semibold mb-1">USERNAME</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={username}
-                onChange={(e) => {setUsername(e.target.value); setStatus('idle');}}
+                onChange={(e) => { setUsername(e.target.value); setStatus('idle'); }}
                 className="glass-input font-mono w-full px-4 py-2.5 rounded-lg"
               />
             </div>
             <div>
               <label className="block text-slate-400 text-xs font-semibold mb-1">PASSWORD</label>
-              <input 
+              <input
                 type="text"
                 value={password}
-                onChange={(e) => {setPassword(e.target.value); setStatus('idle');}}
+                onChange={(e) => { setPassword(e.target.value); setStatus('idle'); }}
                 className="glass-input font-mono w-full px-4 py-2.5 rounded-lg"
               />
             </div>
-            
-            <button 
+
+            <button
               type="submit"
               disabled={status === 'checking'}
               className="glass-btn w-full bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl mt-4 shadow-lg shadow-emerald-900/20"
@@ -433,15 +434,15 @@ const SQLiSim = () => {
             <Cpu className="w-4 h-4" /> Server Logic Core
           </h3>
           <p className="text-slate-500 text-xs mb-4">Live SQL Query Interpretation:</p>
-          
+
           <div className="bg-slate-900/50 p-5 rounded-lg border border-slate-800 font-mono text-sm leading-loose relative overflow-hidden flex-grow flex flex-col justify-center shadow-inner">
-            
+
             {(username === "' OR '1'='1" || password === "' OR '1'='1") && (
               <div className="absolute inset-0 bg-rose-500/5 animate-pulse pointer-events-none"></div>
             )}
 
             <div>
-              <span className="text-purple-400 font-bold">SELECT</span> <span className="text-slate-400">*</span> <span className="text-purple-400 font-bold">FROM</span> <span className="text-sky-300">users</span> 
+              <span className="text-purple-400 font-bold">SELECT</span> <span className="text-slate-400">*</span> <span className="text-purple-400 font-bold">FROM</span> <span className="text-sky-300">users</span>
             </div>
             <div>
               <span className="text-purple-400 font-bold">WHERE</span> <span className="text-slate-300">username = </span>
@@ -461,12 +462,12 @@ const SQLiSim = () => {
           <div className="mt-4 min-h-[60px]">
             {(username === "' OR '1'='1" || password === "' OR '1'='1") ? (
               <div className="text-xs text-rose-300 bg-rose-500/10 p-3 rounded-lg border border-rose-500/20 flex gap-3 items-start">
-                <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5 text-rose-400"/>
+                <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5 text-rose-400" />
                 <span className="leading-relaxed"><strong>Logic Bypass!</strong> The query evaluates to TRUE because '1'='1'. The server ignores the actual credentials and grants access.</span>
               </div>
             ) : (
               <div className="text-xs text-slate-400 bg-slate-800/50 p-3 rounded-lg border border-slate-700/50 flex gap-3 items-start">
-                <Shield className="w-5 h-5 flex-shrink-0 mt-0.5 text-slate-500"/>
+                <Shield className="w-5 h-5 flex-shrink-0 mt-0.5 text-slate-500" />
                 <span className="leading-relaxed">Awaiting exact credential match to evaluate TRUE and grant access.</span>
               </div>
             )}
@@ -511,16 +512,16 @@ const Starfield = () => {
 
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
-        
+
         // Twinkle effect
         s.alpha += s.alphaChange;
         if (s.alpha <= 0.1 || s.alpha >= 0.8) {
           s.alphaChange = -s.alphaChange;
         }
-        
+
         // Very slow drift
         s.x += s.vx / 150;
         s.y += s.vy / 150;
@@ -556,28 +557,28 @@ export default function App() {
   return (
     <>
       <style>{globalCss}</style>
-      
+
       {/* Premium Gradient Background */}
       <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-950 via-slate-950 to-slate-950 -z-20"></div>
-      
+
       {/* Shining Starfield Background */}
       <Starfield />
-      
+
       {/* Subtle ambient lighting */}
       <div className="fixed top-0 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
       <div className="fixed bottom-0 right-1/4 w-96 h-96 bg-emerald-600/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 
       <div className="min-h-screen relative z-10 pb-20">
-        
+
         {/* Header Section */}
         <header className="pt-28 pb-20 text-center px-4 relative flex flex-col items-center justify-center">
-          
+
           {/* Animated 3D Padlock Background */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-20 pointer-events-none" style={{ perspective: '800px' }}>
-            <svg 
-              width="240" 
-              height="240" 
-              viewBox="0 0 100 100" 
+            <svg
+              width="240"
+              height="240"
+              viewBox="0 0 100 100"
               className="spin-y drop-shadow-[0_0_30px_rgba(99,102,241,0.5)]"
             >
               <defs>
@@ -591,12 +592,12 @@ export default function App() {
                 </linearGradient>
               </defs>
               {/* Shackle */}
-              <path 
-                d="M 30 45 V 30 A 20 20 0 0 1 70 30 V 45" 
-                fill="none" 
-                stroke="url(#shackleGrad)" 
-                strokeWidth="10" 
-                strokeLinecap="round" 
+              <path
+                d="M 30 45 V 30 A 20 20 0 0 1 70 30 V 45"
+                fill="none"
+                stroke="url(#shackleGrad)"
+                strokeWidth="10"
+                strokeLinecap="round"
               />
               {/* Lock Body */}
               <rect x="20" y="40" width="60" height="45" rx="8" fill="url(#lockGrad)" />
@@ -609,13 +610,13 @@ export default function App() {
           <div className="inline-flex items-center gap-2 bg-slate-900/80 border border-indigo-500/30 text-indigo-300 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest mb-8 backdrop-blur-sm">
             <Shield className="w-4 h-4" /> Educational Module
           </div>
-          
+
           <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight mb-4 drop-shadow-xl">
             How Passwords Are <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-emerald-400">Compromised</span>
           </h1>
-          
+
           <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mt-6 leading-relaxed">
-            Forget complex code. Experience exactly how systems are breached through interactive visual simulations. 
+            Forget complex code. Experience exactly how systems are breached through interactive visual simulations.
             Scroll down to explore the vulnerabilities.
           </p>
         </header>
